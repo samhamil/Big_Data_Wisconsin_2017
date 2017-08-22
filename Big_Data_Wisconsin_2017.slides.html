@@ -12012,7 +12012,7 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>HTML<span class="p">(</span><span class="s">&#39;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/j-0cUmUyb-Y?rel=0&amp;amp;controls=0&amp;amp;showinfo=0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/j-0cUmUyb-Y?rel=0&amp;amp;controls=0&amp;amp;showinfo=0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12052,7 +12052,7 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>HTML<span class="p">(</span><span class="s">&#39;&lt;iframe width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; src=&quot;http://cds.cern.ch/video/CERN-MOVIE-2013-041-001&quot; allowfullscreen&gt;&lt;/iframe&gt;&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;iframe width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; src=&quot;http://cds.cern.ch/video/CERN-MOVIE-2013-041-001&quot; allowfullscreen&gt;&lt;/iframe&gt;&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12225,7 +12225,7 @@ a.anchor-link {
 <h1 id="Virtual-Data-Lake-Concepts">Virtual Data Lake Concepts<a class="anchor-link" href="#Virtual-Data-Lake-Concepts">&#194;&#182;</a></h1>
 </div>
 </div>
-</div></section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12289,24 +12289,24 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>import jaydebeapi
-import pandas as pd
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">jaydebeapi</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 
-query <span class="o">=</span> <span class="s">&quot;select * from kaggle_us_rent where COUNTY in (&#39;Dane County&#39;,&#39;Milwaukee County&#39;) limit 100;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;select * from kaggle_us_rent where COUNTY in (&#39;Dane County&#39;,&#39;Milwaukee County&#39;) limit 100;&quot;</span>
 
 <span class="c1"># open connection to db </span>
-connection <span class="o">=</span> jaydebeapi.connect<span class="p">(</span>class_path<span class="p">,</span> jdbc_url<span class="p">,</span> 
-                                <span class="p">[</span>user<span class="p">,</span> pw<span class="p">],</span> jar_path<span class="p">)</span>
-curs <span class="o">=</span> connection.cursor<span class="p">()</span>
-curs.execute<span class="p">(</span>query<span class="p">)</span>
-subset <span class="o">=</span> curs.fetchmany<span class="p">(</span><span class="m">10</span><span class="p">)</span> <span class="c1"># fetch rows using cursor</span>
-curs.close<span class="p">()</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">jaydebeapi</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">class_path</span><span class="p">,</span> <span class="n">jdbc_url</span><span class="p">,</span> 
+                                <span class="p">[</span><span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">],</span> <span class="n">jar_path</span><span class="p">)</span>
+<span class="n">curs</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">curs</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">subset</span> <span class="o">=</span> <span class="n">curs</span><span class="o">.</span><span class="n">fetchmany</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># fetch rows using cursor</span>
+<span class="n">curs</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-df <span class="o">=</span> pd.read_sql<span class="p">(</span>query<span class="p">,</span> connection<span class="p">)</span> <span class="c1"># dump to pandas data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span> <span class="c1"># dump to pandas data frame</span>
 
-connection.close<span class="p">()</span> <span class="c1"># disconnect from db</span>
+<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># disconnect from db</span>
 
-df.sort_values<span class="p">(</span><span class="s">&#39;CITY&#39;</span><span class="p">)</span><span class="m">.</span><span class="kp">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;CITY&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12488,27 +12488,27 @@ df.sort_values<span class="p">(</span><span class="s">&#39;CITY&#39;</span><span
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">suppressMessages</span><span class="p">(</span><span class="kn">library</span><span class="p">(</span><span class="s">&#39;RJDBC&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">suppressMessages</span><span class="p">(</span><span class="n">library</span><span class="p">(</span><span class="s1">&#39;RJDBC&#39;</span><span class="p">))</span>
 
-input_df <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;resources/milwaukee_bucks_stats.csv&#39;</span><span class="p">)</span>
+<span class="n">input_df</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s1">&#39;resources/milwaukee_bucks_stats.csv&#39;</span><span class="p">)</span>
 
 <span class="c1"># create driver</span>
-drv <span class="o">&lt;-</span> JDBC<span class="p">(</span>class_path<span class="p">,</span> jar_path<span class="p">,</span> identifier.quote<span class="o">=</span><span class="s">&quot;`&quot;</span><span class="p">)</span>
+<span class="n">drv</span> <span class="o">&lt;-</span> <span class="n">JDBC</span><span class="p">(</span><span class="n">class_path</span><span class="p">,</span> <span class="n">jar_path</span><span class="p">,</span> <span class="n">identifier</span><span class="o">.</span><span class="n">quote</span><span class="o">=</span><span class="s2">&quot;`&quot;</span><span class="p">)</span>
 
 <span class="c1"># open connection to db</span>
-conn <span class="o">&lt;-</span> dbConnect<span class="p">(</span>drv<span class="p">,</span> jdbc_url<span class="p">,</span> user<span class="p">,</span> pw<span class="p">)</span>
+<span class="n">conn</span> <span class="o">&lt;-</span> <span class="n">dbConnect</span><span class="p">(</span><span class="n">drv</span><span class="p">,</span> <span class="n">jdbc_url</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">)</span>
 
 <span class="c1"># write input dataframe to table</span>
-x <span class="o">&lt;-</span> dbWriteTable<span class="p">(</span>conn<span class="p">,</span> <span class="s">&quot;milwaukee_bucks_stats&quot;</span><span class="p">,</span> input_df<span class="p">,</span> rownames<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">dbWriteTable</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s2">&quot;milwaukee_bucks_stats&quot;</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="n">rownames</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span>
 
-query <span class="o">&lt;-</span> <span class="s">&quot;select NAME, G, PTS_PER_G, AST, TRB, STL, BLK from milwaukee_bucks_stats;&quot;</span>
+<span class="n">query</span> <span class="o">&lt;-</span> <span class="s2">&quot;select NAME, G, PTS_PER_G, AST, TRB, STL, BLK from milwaukee_bucks_stats;&quot;</span>
 
 <span class="c1"># return query to data frame</span>
-output_df <span class="o">&lt;-</span> dbGetQuery<span class="p">(</span>conn<span class="p">,</span> query<span class="p">)</span>
+<span class="n">output_df</span> <span class="o">&lt;-</span> <span class="n">dbGetQuery</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 
-x <span class="o">&lt;-</span> dbDisconnect<span class="p">(</span>conn<span class="p">)</span> <span class="c1"># disconnect from db</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">dbDisconnect</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span> <span class="c1"># disconnect from db</span>
 
-<span class="kp">head</span><span class="p">(</span>output_df<span class="p">[</span><span class="kp">order</span><span class="p">(</span><span class="o">-</span>output_df<span class="o">$</span>PTS_PER_G<span class="p">),])</span>
+<span class="n">head</span><span class="p">(</span><span class="n">output_df</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="o">-</span><span class="n">output_df</span><span class="err">$</span><span class="n">PTS_PER_G</span><span class="p">),])</span>
 </pre></div>
 
 </div>
@@ -12546,6 +12546,227 @@ x <span class="o">&lt;-</span> dbDisconnect<span class="p">(</span>conn<span cla
 </div>
 
 </div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="FTP-Connections">FTP Connections<a class="anchor-link" href="#FTP-Connections">&#194;&#182;</a></h1><p><img src="Images/Virtual_Data_Lake_FTP.png" height="500" width="500"></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="FTP-Outbound">FTP Outbound<a class="anchor-link" href="#FTP-Outbound">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> ls ftp_data/outbound/
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>milwaukee_bucks_stats.csv
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> cat resources/ftp_put.sh
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>#!/bin/bash
+
+USR=$1
+PW=$2
+FTP_HOST=$3
+
+cd ftp_data/outbound
+
+ftp -n -v $FTP_HOST &lt;&lt; EOT
+user $USR $PW
+prompt
+cd big_data
+put milwaukee_bucks_stats.csv
+quit
+EOT
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> <span class="nb">source</span> resources/ftp_put.sh <span class="nv">$USR</span> <span class="nv">$PW</span> <span class="nv">$FTP_HOST</span> &gt;&gt; log
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="FTP-Inbound">FTP Inbound<a class="anchor-link" href="#FTP-Inbound">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> ls ftp_data/inbound/
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> cat resources/ftp_get.sh
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>#!/bin/bash
+
+USR=$1
+PW=$2
+FTP_HOST=$3
+
+ftp -n -v $FTP_HOST &lt;&lt; EOT
+user $USR $PW
+prompt
+cd big_data
+get milwaukee_bucks_stats.csv
+quit
+EOT
+
+mv milwaukee_bucks_stats.csv ftp_data/inbound/.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> <span class="nb">source</span> resources/ftp_get.sh <span class="nv">$USR</span> <span class="nv">$PW</span> <span class="nv">$FTP_HOST</span> &gt;&gt; log
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> head -n <span class="m">5</span> ftp_data/inbound/milwaukee_bucks_stats.csv
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Rk,Name,Age,G,GS,MP,FG,FGA,FG_Pct,3P,3PA,3P_Pct,2P,2PA,2P_Pct,eFG_Pct,FT,FTA,FT_Pct,ORB,DRB,TRB,AST,STL,BLK,TOV,PF,PTS_Per_G
+1,Giannis Antetokounmpo,22,80,80,35.6,8.2,15.7,0.521,0.6,2.3,0.272,7.6,13.5,0.563,0.541,5.9,7.7,0.77,1.8,7,8.8,5.4,1.6,1.9,2.9,3.1,22.9
+2,Jabari Parker,21,51,50,33.9,7.8,16,0.49,1.3,3.5,0.365,6.5,12.5,0.525,0.53,3.2,4.3,0.743,1.5,4.6,6.2,2.8,1,0.4,1.8,2.2,20.1
+3,Khris Middleton,25,29,23,30.7,5.2,11.5,0.45,1.6,3.6,0.433,3.6,7.9,0.459,0.518,2.8,3.2,0.88,0.4,3.9,4.2,3.4,1.4,0.2,2.2,2.7,14.7
+4,Tony Snell,25,80,80,29.2,3.1,6.8,0.455,1.8,4.4,0.406,1.3,2.3,0.548,0.588,0.6,0.7,0.81,0.3,2.8,3.1,1.2,0.7,0.2,0.7,1.6,8.5
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
