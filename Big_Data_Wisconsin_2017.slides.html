@@ -12771,6 +12771,390 @@ mv milwaukee_bucks_stats.csv ftp_data/inbound/.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Cloud-Integration">Cloud Integration<a class="anchor-link" href="#Cloud-Integration">&#194;&#182;</a></h1><p><img src="Images/Virtual_Data_Lake_Cloud.png" height="500" width="500"></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Cloud-SDK's">Cloud SDK's<a class="anchor-link" href="#Cloud-SDK's">&#194;&#182;</a></h1><ul>
+<li>Amazon (<a href="https://aws.amazon.com/sdk-for-python/">https://aws.amazon.com/sdk-for-python/</a>)</li>
+<li>Azure (<a href="https://azure.microsoft.com/en-us/downloads/">https://azure.microsoft.com/en-us/downloads/</a>)</li>
+<li>Google (<a href="https://cloud.google.com/sdk/">https://cloud.google.com/sdk/</a>)</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Google-Cloud-Example">Google Cloud Example<a class="anchor-link" href="#Google-Cloud-Example">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="We-will-work-with-a-file-containing-the-NFC-standings-for-the-2016-seasons">We will work with a file containing the NFC standings for the 2016 seasons<a class="anchor-link" href="#We-will-work-with-a-file-containing-the-NFC-standings-for-the-2016-seasons">&#194;&#182;</a></h2>
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> cat google_data/outbound/nfc_standings_2016_good.csv
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tm ,W, L,T
+Dallas Cowboys* ,13, 3,0
+New York Giants+ ,11, 5,0
+Washington Redskins ,8, 7,1
+Philadelphia Eagles ,7, 9,0
+Green Bay Packers* ,10, 6,0
+Detroit Lions+ ,9, 7,0
+Minnesota Vikings ,8, 8,0
+Chicago Bears ,3, 13,0
+Atlanta Falcons* ,11, 5,0
+Tampa Bay Buccaneers ,9, 7,0
+New Orleans Saints ,7, 9,0
+Carolina Panthers ,6, 10,0
+Seattle Seahawks* ,10, 5,1
+Arizona Cardinals ,7, 8,1
+Los Angeles Rams ,4, 12,0
+San Francisco 49ers ,2, 14,0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Google-Storage-Example">Google Storage Example<a class="anchor-link" href="#Google-Storage-Example">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> gsutil mb gs://samham
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Creating gs://samham/...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> gsutil cp google_data/outbound/nfc_standings_2016_good.csv gs://samham/nfc_standings_2016.csv
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Copying file://google_data/outbound/nfc_standings_2016_good.csv [Content-Type=text/csv]...
+/ [1 files][  435.0 B/  435.0 B]                                                
+Operation completed over 1 objects/435.0 B.                                      
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> gsutil cp gs://samham/nfc_standings_2016.csv google_data/inbound/.
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Copying gs://samham/nfc_standings_2016.csv...
+/ [1 files][  435.0 B/  435.0 B]                                                
+Operation completed over 1 objects/435.0 B.                                      
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> gsutil rm -f gs://samham/nfc_standings_2016.csv
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Removing gs://samham/nfc_standings_2016.csv...
+/ [1 objects]                                                                   
+Operation completed over 1 objects.                                              
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> gsutil rm -r gs://samham
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Removing gs://samham/...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Big-Query-Example">Big Query Example<a class="anchor-link" href="#Big-Query-Example">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="k">capture</span>
+! bq mk samham
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> cat google_data/nfc_standings_2016_schema.json
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[
+	{&#34;name&#34;: &#34;Name&#34;,&#34;type&#34;: &#34;STRING&#34;},
+	{&#34;name&#34;: &#34;Wins&#34;,&#34;type&#34;: &#34;INTEGER&#34;},
+	{&#34;name&#34;: &#34;Losses&#34;,&#34;type&#34;: &#34;INTEGER&#34;},
+	{&#34;name&#34;: &#34;Ties&#34;,&#34;type&#34;: &#34;INTEGER&#34;}
+]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> bq load --source_format<span class="o">=</span>CSV --skip_leading_rows<span class="o">=</span><span class="m">1</span> --schema<span class="o">=</span>google_data/nfc_standings_2016_schema.json samham.nfc_standings_2016 gs://samham/nfc_standings_2016.csv
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Waiting on bqjob_r6fe8b023d1a76143_0000015e082117dd_1 ... (0s) Current status: DONE   
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> bq query <span class="s2">&quot;select * from [samham.nfc_standings_2016] order by Wins desc limit 6&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Waiting on bqjob_r11d30e9b6d3d4238_0000015e0826ab16_1 ... (0s) Current status: DONE   
++---------------------+------+--------+------+
+|        Name         | Wins | Losses | Ties |
++---------------------+------+--------+------+
+| Dallas Cowboys*     |   13 |      3 |    0 |
+| Atlanta Falcons*    |   11 |      5 |    0 |
+| New York Giants+    |   11 |      5 |    0 |
+| Green Bay Packers*  |   10 |      6 |    0 |
+| Seattle Seahawks*   |   10 |      5 |    1 |
+| Detroit Lions+      |    9 |      7 |    0 |
++---------------------+------+--------+------+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Hadoop-Integration">Hadoop Integration<a class="anchor-link" href="#Hadoop-Integration">&#194;&#182;</a></h1><p><img src="Images/Virtual_Data_Lake_Hadoop.png" height="500" width="500"></p>
 
 </div>
