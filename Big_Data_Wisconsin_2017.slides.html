@@ -13160,6 +13160,198 @@ Operation completed over 1 objects.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="API-and-Auxiliary-Data-Integration">API and Auxiliary Data Integration<a class="anchor-link" href="#API-and-Auxiliary-Data-Integration">&#194;&#182;</a></h1><p><img src="Images/Virtual_Data_Lake_Sheets.png" height="500" width="500"></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Google-Sheets">Google Sheets<a class="anchor-link" href="#Google-Sheets">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>API (<a href="https://developers.google.com/sheets/api/">https://developers.google.com/sheets/api/</a>)</li>
+<li>Python Client (<a href="https://developers.google.com/sheets/api/quickstart/python">https://developers.google.com/sheets/api/quickstart/python</a>)</li>
+</ul>
+
+</div>
+</div>
+</div></div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    
+    <span class="c1"># path to json file containing client credentails (id, secret, refresh, grant_type)</span>
+    <span class="n">credential_json_path</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># path to json file containing token</span>
+    <span class="n">token_json_path</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># url to published google sheet csv</span>
+    <span class="n">sheet_url</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c1"># output csv file</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    
+    <span class="c1"># load json files to a dictionaries</span>
+    <span class="n">credential_dict</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">credential_json_path</span><span class="p">)</span>
+    <span class="n">old_token_dict</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">token_json_path</span><span class="p">)</span>
+    
+    <span class="c1"># get new token dict</span>
+    <span class="n">new_token_dict</span> <span class="o">=</span> <span class="n">get_access_token_dict</span><span class="p">(</span><span class="n">credential_dict</span><span class="p">)</span>
+    
+    <span class="c1"># get the response from the google sheet api service</span>
+    <span class="n">sheet_resp</span> <span class="o">=</span> <span class="n">get_sheet</span><span class="p">(</span><span class="n">sheet_url</span><span class="p">,</span> <span class="n">new_token_dict</span><span class="p">)</span>
+    
+    <span class="c1"># parse response as a CSV and dump to file</span>
+    <span class="n">dump_response</span><span class="p">(</span><span class="n">sheet_resp</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
+
+    
+<span class="k">def</span> <span class="nf">json_to_dict</span><span class="p">(</span><span class="n">json_path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json_dict</span>
+    
+    
+<span class="k">def</span> <span class="nf">get_access_token_dict</span><span class="p">(</span><span class="n">credential_dict</span><span class="p">):</span>
+    <span class="n">URL_REFRESH_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;https://www.googleapis.com/oauth2/v4/token&#39;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">URL_REFRESH_TOKEN</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">credential_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    
+
+<span class="k">def</span> <span class="nf">get_sheet</span><span class="p">(</span><span class="n">sheet_url</span><span class="p">,</span> <span class="n">token_dict</span><span class="p">):</span>  
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sheet_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span><span class="s2">&quot;Bearer </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">token_dict</span><span class="p">[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]})</span>    
+    <span class="k">return</span> <span class="n">response</span>
+    
+<span class="k">def</span> <span class="nf">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">output_file</span><span class="p">):</span>
+    <span class="n">resp_str</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span> <span class="c1"># cast response to string</span>
+    <span class="n">resp_csv</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">resp_str</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(),</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># dump the csv reader to a file</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>  
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">resp_csv</span><span class="p">:</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Dump-Spreadsheet-to-Text">Dump Spreadsheet to Text<a class="anchor-link" href="#Dump-Spreadsheet-to-Text">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> ls Google_Sheets/*
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Google_Sheets/Get_Google_Sheet.py     Google_Sheets/run_sheets.sh
+Google_Sheets/google_sheet_output.txt
+
+Google_Sheets/conf:
+sams_client_secret.json
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> <span class="nb">cd</span> Google_Sheets<span class="p">;</span> <span class="nb">source</span> run_sheets.sh
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> head -n <span class="m">5</span> Google_Sheets/google_sheet_output.txt
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tm ,W, L,T
+Dallas Cowboys* ,13, 3,0
+New York Giants+ ,11, 5,0
+Washington Redskins ,8, 7,1
+Philadelphia Eagles ,7, 9,0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Hadoop-Integration">Hadoop Integration<a class="anchor-link" href="#Hadoop-Integration">&#194;&#182;</a></h1><p><img src="Images/Virtual_Data_Lake_Hadoop.png" height="500" width="500"></p>
 
 </div>
