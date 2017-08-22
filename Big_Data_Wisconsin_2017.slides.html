@@ -12771,6 +12771,52 @@ mv milwaukee_bucks_stats.csv ftp_data/inbound/.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Hadoop-Integration">Hadoop Integration<a class="anchor-link" href="#Hadoop-Integration">&#194;&#182;</a></h1><p><img src="Images/Virtual_Data_Lake_Hadoop.png" height="500" width="500"></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="HDFS-(Similar-Principles-Apply-to-Hive,-HBase,-etc.)">HDFS (Similar Principles Apply to Hive, HBase, etc.)<a class="anchor-link" href="#HDFS-(Similar-Principles-Apply-to-Hive,-HBase,-etc.)">&#194;&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Install Hadoop (same version as on Hadoop Cluster) on your Data Science Application Server (DSAS)</li>
+<li>Ensure that your user name on the DSAS is registered on the Hadoop Cluster</li>
+<li>Edit core-site.xml (or copy from Hadoop Cluster):
+<pre><code>&lt;!-- namenode --&gt;
+&lt;property&gt;
+&lt;name&gt;fs.default.name&lt;/name&gt;
+&lt;value&gt;hdfs://host:8020&lt;/value&gt;
+&lt;/property&gt;</code></pre>
+</li>
+<li>Edit hdfs-site.xml (or copy from Hadoop Cluster):
+<pre><code>&lt;-- storage directories for HDFS - the hadoop.tmp.dir property, whose default is /tmp/hadoop-${user.name} --&gt;
+&lt;property&gt;
+ &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+ &lt;value&gt;/your-dir/&lt;/value&gt;
+&lt;/property&gt;</code></pre>
+</li>
+<li>Access hdfs files:
+<pre><code>hdfs dfs -ls /path/to/file.txt</code></pre>
+</li>
+</ol>
+
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <div id="container">
     <div id="floated-imgs" style="float:right;justify-content:center;">
         <img src="Images/Kohls_Logo.png" height="400" width="400">
